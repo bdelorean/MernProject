@@ -25,7 +25,7 @@ export const dishesReducer = (state, action) => {
 
 export const DishesContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(dishesReducer, {
-    dishes: null,
+    dishes: [],
   });
   return (
     <DishesContext.Provider value={{ ...state, dispatch }}>

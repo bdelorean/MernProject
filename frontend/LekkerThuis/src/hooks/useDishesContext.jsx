@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { DishesContext } from "./context/DishesContext.js";
+import { DishesContext } from "../context/DishesContext.jsx";
 
 export const useDishesContext = () => {
   const context = useContext(DishesContext);

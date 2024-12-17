@@ -31,7 +31,7 @@ export const deleteDish = async (req, res) => {
     try {
       await Menu.findByIdAndDelete(id); // Zoek de dish op basis van het ID en verwijder deze
   
-      res.status(200).json({ message: 'Dish deleted successfully' }); // Retourneer een succesbericht als de dish succesvol is verwijderd
+      res.status(200).json({ _id: id }); //Stuur het ID van het verwijderde dish terug naar de frontend
     } catch (error) {
       res.status(500).json({ error: 'Internal server error' }); // Als er een fout optreedt, retourneer een 500-fout
     }

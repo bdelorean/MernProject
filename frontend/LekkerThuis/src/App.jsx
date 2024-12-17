@@ -1,11 +1,14 @@
 import "./App.css";
-import AdminDashboard from "./components/AdminDashboard";
+import AdminPage from "./Pages/AdminPage";
+import MenuPage from "./Pages/MenuPage";
+
 
 
 function App() {
   return (
     <>
-      <AdminDashboard/>
+      <AdminPage />
+      <MenuPage />
     </>
   );
 }

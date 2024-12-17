@@ -17,31 +17,7 @@ const app = express();
 //dit omdat de frontend op een andere port draait
 app.use(cors());
 
-// Configurăm storage-ul pentru Multer
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    // Locația în care vor fi stocate fișierele încărcate
-    cb(null, 'public/images');  // Asigură-te că folderul există
-  },
-  filename: (req, file, cb) => {
-    // Numele fișierului, adăugăm un timestamp pentru a preveni conflictele
-    cb(null, Date.now() + path.extname(file.originalname));  // Adaugă extensia fișierului
-  }
-});
 
-const upload = multer({ storage: storage });
-// Middleware pentru a servi fișierele statice din folderul public
-app.use('/images', express.static('public/images'));
-
-// Ruta de încărcare imagine
-app.post('/upload', upload.single('image'), (req, res) => {
-  try {
-    // După ce imaginea este încărcată, returnează URL-ul acesteia
-    res.status(200).json({ imageUrl: `/images/${req.file.filename}` });
-  } catch (error) {
-    res.status(500).send('Error uploading file');
-  }
-});
 
 // Middleware om JSON-verzoeken te parsen
 app.use(express.json());

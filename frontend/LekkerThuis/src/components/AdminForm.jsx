@@ -1,31 +1,97 @@
 import { useState } from "react";
-
+import { useDishesContext } from "../hooks/useDishesContext";
 
 const AdminForm = () => {
-  // State pentru imagine
-  const [image, setImage] = useState(null);
-  const [uploadedUrl, setUploadedUrl] = useState("");
+  // Declare state for title, description, price, and image-related fields.
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
 
-  // Handle pentru schimbarea fișierului selectat
-  const handleFileChange = (e) => {
+  const [image, setImage] = useState("");
+  const [previewImage, setPreviewImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Use dispatch from the DishesContext to update global state when a new dish is created.
+  const { dispatch } = useDishesContext();
+
+  const handleImageChange = (e) => {
     setImage(e.target.files[0]);
+    setPreviewImage(URL.createObjectURL(e.target.files[0]));
   };
 
-  // Handle pentru submit-ul formularului
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("image", image);
-
+  const uploadImage = async () => {
+    setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:4000/upload", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await response.json();
-      setUploadedUrl(data.imageUrl); // URL-ul imaginii încărcate
+      // Verify image file type before uploading.
+      if (
+        image &&
+        (image.type === "image/jpg" ||
+          image.type === "image/jpeg" ||
+          image.type === "image/png")
+      ) {
+        const newImage = new FormData();
+
+        newImage.append("file", image);
+        newImage.append("cloud_name", "dh4adz0rr");
+        newImage.append("upload_preset", "Bdelorean");
+
+        const response = await fetch(
+          "https://api.cloudinary.com/v1_1/dh4adz0rr/image/upload",
+          {
+            method: "POST",
+            body: newImage,
+          }
+        );
+
+        const imgData = await response.json();
+        setIsLoading(false);
+        return imgData.url.toString(); // Return the URL of the uploaded image.
+      } else {
+        throw new Error(
+          "Invalid image type. Only JPG, JPEG, and PNG are allowed."
+        );
+      }
     } catch (error) {
       console.error("Error uploading image:", error);
+      setIsLoading(false);
+      throw error; // Propagate the error to handleSubmit.
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Upload the image and get the image URL.
+      const imageUrl = await uploadImage();
+
+      // Create a new dish object to send to the server.
+      const dish = { title, description, price, image: imageUrl };
+
+      const response = await fetch("http://localhost:4000/api/menu", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dish),
+      });
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        throw new Error("Failed to add dish");
+      }
+
+      if (response.ok) {
+        dispatch({ type: "CREATE_DISH", payload: json });
+        setTitle("");
+        setDescription("");
+        setPrice("");
+        setImage("");
+        setPreviewImage(null);
+      }
+    } catch (error) {
+      console.error("Error adding dish:", error);
     }
   };
 
@@ -33,7 +99,7 @@ const AdminForm = () => {
     <div className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
       <h1 className="text-2xl font-semibold mb-6 text-gray-700">Admin Form</h1>
       <form className="space-y-6" onSubmit={handleSubmit}>
-        {/* Title */}
+        {/* Title input field */}
         <div>
           <label
             htmlFor="title"
@@ -47,23 +113,27 @@ const AdminForm = () => {
             name="title"
             placeholder="Enter title"
             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
 
-        {/* Ingredients */}
+        {/* Description input field */}
         <div>
           <label
-            htmlFor="ingredients"
+            htmlFor="description"
             className="block text-sm font-medium text-gray-700"
           >
-            Ingredients
+            Description
           </label>
           <textarea
-            id="ingredients"
-            name="ingredients"
-            placeholder="Enter ingredients"
+            id="description"
+            name="description"
+            placeholder="Enter description"
             rows="3"
             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           ></textarea>
         </div>
 
@@ -81,10 +151,12 @@ const AdminForm = () => {
             name="price"
             placeholder="Enter price"
             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
           />
         </div>
 
-        {/* Photo */}
+        {/* Image Upload */}
         <div>
           <label
             htmlFor="image"
@@ -96,25 +168,28 @@ const AdminForm = () => {
             type="file"
             id="image"
             accept="image/*"
-            onChange={handleFileChange}
+            onChange={handleImageChange}
             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
 
-        {/* Display uploaded image */}
-        {uploadedUrl && (
-          <div className="mt-4">
-            <p>Image uploaded:</p>
-            <img src={`http://localhost:4000${uploadedUrl}`} alt="Uploaded" />
-          </div>
-        )}
+        {/* Preview Image */}
+        <div>
+          {previewImage && (
+            <img
+              src={previewImage}
+              alt="Uploaded preview"
+              className="mt-4 w-full max-h-64 object-cover rounded-md"
+            />
+          )}
+        </div>
 
         {/* Submit Button */}
         <button
           type="submit"
           className="w-full px-4 py-2 text-white bg-blue-600 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mt-4"
         >
-          Submit
+          {isLoading ? "Uploading..." : "Submit"}
         </button>
       </form>
     </div>
