@@ -1,3 +1,44 @@
+@import url("https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Prociono&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  background-color: #effbf7;
+  font-family: Prociono;
+}
+
+h2,span {
+  font-family: Pinyon Script;
+}
+* {
+  box-sizing: border-box;
+}
+.custom-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+}
+.footer{
+height: 40vh;
+width: 100%;
+position: relative;
+bottom: 0;
+}
+ .footer-bg {
+  position: absolute;
+  background-image: url('/images/bg.footer.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.7;
+  z-index: 0;
+  height: 100%;
+  width: 100%;
+  }
+
+  .footer-content{
+    z-index: 1;
+  }
+  .bg-component{
+    opacity: 0.5;
+  }
