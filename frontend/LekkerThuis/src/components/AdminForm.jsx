@@ -145,12 +145,13 @@ const AdminForm = () => {
           >
             Price
           </label>
+          
           <input
             type="number"
             id="price"
             name="price"
             placeholder="Enter price"
-            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 appearance-none"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
           />

@@ -9,7 +9,8 @@ body {
   font-family: Prociono;
 }
 
-h2,span {
+h2,
+.span {
   font-family: Pinyon Script;
 }
 * {
@@ -18,15 +19,15 @@ h2,span {
 .custom-shadow {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
 }
-.footer{
-height: 40vh;
-width: 100%;
-position: relative;
-bottom: 0;
+.footer {
+  height: 40vh;
+  width: 100%;
+  position: relative;
+  bottom: 0;
 }
- .footer-bg {
+.footer-bg {
   position: absolute;
-  background-image: url('/images/bg.footer.jpg');
+  background-image: url("/images/bg.footer.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -34,11 +35,28 @@ bottom: 0;
   z-index: 0;
   height: 100%;
   width: 100%;
-  }
+}
 
-  .footer-content{
-    z-index: 1;
-  }
-  .bg-component{
-    opacity: 0.5;
-  }
+.footer-content {
+  z-index: 1;
+}
+.bg-component {
+  opacity: 0.5;
+}
+.blur-container::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 60px; /* Înălțimea efectului de blur */
+  background: linear-gradient(
+    to bottom,
+    #effbf7,
+    rgba(239, 251, 247, 0)
+  ); /* Gradient care amestecă culoarea ta */
+  z-index: 1;
+}
+.blur-container::before {
+  top: 0;
+}
+

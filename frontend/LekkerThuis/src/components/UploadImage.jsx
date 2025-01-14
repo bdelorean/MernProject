@@ -1,8 +1,6 @@
 import { useState } from "react";
 
 const UploadImage = () => {
-  
-
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
     setPreviewImage(URL.createObjectURL(e.target.files[0]));
@@ -14,7 +12,7 @@ const UploadImage = () => {
     try {
       //let imageURL;
 
-      // if the user select and image AND the image type is one of that
+      // if the user select an image AND the image type is one of that
       if (
         image &&
         (image.type === "image/jpg" ||
@@ -37,22 +35,23 @@ const UploadImage = () => {
 
         const imgData = await response.json();
         console.log(imgData);
-        
+
         imageURL = imgData.url.toString();
         setPreviewImage(null);
         alert(imgData.url);
+      } else {
+        // Handle invalid image type error
+        alert(
+          "Error: Invalid image type. Only JPG, JPEG, and PNG are allowed."
+        );
       }
     } catch (error) {
-      console.log(error);
+      alert(`Error uploading image: ${error.message}`);
       setIsLoading(false);
     }
   };
 
-  return (
-    <div>
-      
-    </div>
-  );
+  return <div></div>;
 };
 
 export default UploadImage;

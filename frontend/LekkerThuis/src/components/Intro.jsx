@@ -7,7 +7,7 @@ const Intro = () => {
       <Titles 
       title="Lekker Thuis"/>
       <div className="w-3/4 text-left">
-        <p className="mb-4 text-lg">
+        <p className="mb-4  text-sm">
           Ben je na een lange dag te moe om te koken? Geen zorgen, wij zorgen
           voor heerlijke maaltijden, direct bij jou thuis!
         </p>

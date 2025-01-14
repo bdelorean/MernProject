@@ -28,14 +28,14 @@ const AdminPage = () => {
     fetchDIshes();
   }, []);
   return (
-    <div className="flex flex-row ">
+    <div className="flex flex-col items-center justify-around mx-20 mb-20">
+      {/* Render the AdminForm component */}
+      <AdminForm />
       {/* Render a list of dishes, each passed as a prop to the DishDetails component */}
-      <div className="dishes">
+      <div className="dishes grid grid-cols-1 md:grid-cols-3 gap-4 mt-10">
         {dishes &&
           dishes.map((dish) => <DishDetails key={dish._id} dish={dish} />)}
       </div>
-      {/* Render the AdminForm component */}
-      <AdminForm />
     </div>
   );
 };

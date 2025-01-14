@@ -17,11 +17,27 @@ const DishDetails = ({ dish }) => {
   };
 
   return (
-    <div className="bg-slate-500 m-2">
-      <h4>{dish.title}</h4>
-      <p>{dish.description}</p>
-      <p>{dish.price}</p>
-      <img src={dish.image} alt={dish.title} className="w-5" />
+    <div className="h-36  bg-black bg-opacity-30 m-2 flex flex-row items-center justify-around p-2 w-96 gap-4">
+      {/* Imaginea */}
+      <div className="h-3/4 w-24 flex-shrink-0 shadow-md">
+        <img
+          src={dish.image}
+          alt={dish.title}
+          className="h-full w-full object-contain"
+        />
+      </div>
+
+      {/* Detalii despre dish */}
+      <div className="text-xs flex flex-col justify-between text-gray-50 gap-1">
+        <h4 className="text-sm">{dish.title}</h4>
+        <p>
+          <span className="font-medium text-sm">Ingrediënten:</span>
+          {dish.description}
+        </p>
+        <p className="text-sm">€{dish.price}</p>
+      </div>
+
+      {/* Butonul de ștergere */}
       <button onClick={handleDelete}>
         <FaTrash />
       </button>
