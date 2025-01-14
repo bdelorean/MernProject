@@ -11,6 +11,10 @@ const AdminForm = () => {
   const [previewImage, setPreviewImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  //state for error message
+  const [error, setError] = useState("");
+  const [imageError, setImageError] = useState("");
+
   // Use dispatch from the DishesContext to update global state when a new dish is created.
   const { dispatch } = useDishesContext();
 
@@ -47,6 +51,10 @@ const AdminForm = () => {
         setIsLoading(false);
         return imgData.url.toString(); // Return the URL of the uploaded image.
       } else {
+        setImageError(
+          "Invalid image type. Only JPG, JPEG, and PNG are allowed."
+        );
+        setIsLoading(false);
         throw new Error(
           "Invalid image type. Only JPG, JPEG, and PNG are allowed."
         );
@@ -60,6 +68,16 @@ const AdminForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Reset previous errors
+    setError("");
+    setImageError("");
+
+    // Validate fields before submission
+    if (!title || !description || !price || !image) {
+      setError("All fields must be filled out.");
+      return;
+    }
 
     try {
       // Upload the image and get the image URL.
@@ -92,6 +110,7 @@ const AdminForm = () => {
       }
     } catch (error) {
       console.error("Error adding dish:", error);
+      setError("Failed to add the dish. Please try again.");
     }
   };
 
@@ -145,7 +164,7 @@ const AdminForm = () => {
           >
             Price
           </label>
-          
+
           <input
             type="number"
             id="price"
@@ -184,6 +203,10 @@ const AdminForm = () => {
             />
           )}
         </div>
+
+        {/* Error Messages */}
+        {error && <div className="text-red-500 text-sm">{error}</div>}
+        {imageError && <div className="text-red-500 text-sm">{imageError}</div>}
 
         {/* Submit Button */}
         <button
