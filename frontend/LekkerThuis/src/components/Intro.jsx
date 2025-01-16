@@ -11,7 +11,7 @@ const Intro = () => {
           Ben je na een lange dag te moe om te koken? Geen zorgen, wij zorgen
           voor heerlijke maaltijden, direct bij jou thuis!
         </p>
-        <p className="mb-4 text-lg">
+        <p className="mb-4 md:text-lg text-sm">
           Benieuwd naar de gerechten van deze week? Bekijk snel ons menu!”
         </p>
         <MenuButton />

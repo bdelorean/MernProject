@@ -2,6 +2,7 @@ import { useDishesContext } from "../hooks/useDishesContext"; // Importi hook-ul
 import Titles from "../components/Titles";
 import BgComponent from "../components/BgComponent";
 import { useEffect, useState } from "react";
+import BgAnimation from "../components/BgAnimation";
 
 const MenuPage = () => {
   const { dishes } = useDishesContext(); // pak dishes lijst van context
@@ -19,24 +20,25 @@ const MenuPage = () => {
     const filtered = dishes.filter((dish) =>
       dish.title.toLowerCase().includes(searchInput.toLowerCase())
     );
-    setFilteredDishes(filtered)
-  },[searchInput, dishes]);
+    setFilteredDishes(filtered);
+  }, [searchInput, dishes]);
 
   return (
-    <>
-      <BgComponent className="absolute  right-10 -top-4 -z-10" />
-      <div className="flex flex-col items-center justify-center">
+    <div >
+    <BgAnimation className="absolute  left-10 -z-15 "/>
+      {/* <BgComponent className="absolute  right-10 -top-4 -z-10" /> */}
+      <div className="flex flex-col items-center justify-center relative">
         <Titles title="Lekker Thuis" />
         <h3 className="text-xl">Menu week 20 t/m 27.12</h3>
         {/* Search balk */}
-        <div className="w-96 h-8 bg-[#5C584E] mx-auto flex items-center justify-center mt-4 rounded-lg">
+        <div className="w-96 h-8 bg-secondary mx-auto flex items-center justify-center mt-4 rounded-lg">
           <input
             type="text"
             placeholder="Zoek een titel op"
             onChange={handleChange}
             value={searchInput}
             name="search"
-            className="w-60 h-6 p-1 text-center rounded-md bg-[#5C584E] border placeholder:text-xs placeholder:italic text-xs text-white focus:outline-none"
+            className="w-60 h-6 p-1 text-center rounded-md bg-secondary border placeholder:text-xs placeholder:italic text-xs placeholder:text-white focus:outline-none"
           />
           <svg
             className="w-5 h-5 text-white ml-2" // Dimensiuni și culoare pentru iconiță
@@ -52,11 +54,11 @@ const MenuPage = () => {
           </svg>
         </div>
         {/* Menu list */}
-        <div className="dishes grid grid-cols-1 md:grid-cols-3 gap-4 mt-20 mx-auto mb-20">
+        <div className="dishes grid grid-cols-1 md:grid-cols-3 gap-4 mt-20 mx-auto mb-40">
           {filteredDishes.map((dish) => (
             <div
               key={dish._id}
-              className="h-36  bg-accent m-2 flex flex-row items-center justify-around p-2 w-96 gap-4"
+              className="h-36  bg-accent m-2 flex flex-row items-center justify-around p-2 w-96 gap-4 shadow-2xl"
             >
               {/* Image */}
               <div className="h-3/4 w-24 flex-shrink-0 shadow-md">
@@ -79,7 +81,8 @@ const MenuPage = () => {
           ))}
         </div>
       </div>
-    </>
+      
+    </div>
   );
 };
 

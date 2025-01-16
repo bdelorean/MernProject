@@ -59,4 +59,8 @@ h2,
 .blur-container::before {
   top: 0;
 }
-
+@media (max-width: 700px) {
+  .footer {
+    height: 45vh;
+  }
+}

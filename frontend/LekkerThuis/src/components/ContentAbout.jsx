@@ -8,15 +8,17 @@ const ContentAbout = () => {
   useEffect(()=>{
     AOS.init({
       mirror:true,
+      duration:2000,
+      
     })
   })
 
   return (
     <>
-       <BgComponent className="absolute  right-10 -top-4 -z-10" /> 
-      <div className="relative md:h-[180vh] h-[120vh] mt-20">
+       <BgComponent className="absolute  right-10 md:-top-4 -z-10 w-1/3 top-0 rotate-30" /> 
+      <div className="relative md:h-[180vh] h-[140vh] mt-20">
         <img src="/images/about.jpg" alt="" className=" md:w-3/4 mx-auto" />
-        <div className="bg-secondary bg-opacity-90 p-10 space-y-6 text-center md:w-2/5 w-3/4 shadow-[5px_0_5px_0_rgba(0,0,0,0.25)] absolute md:top-1/3 md:left-1/2 top-24 left-40 md:text-base text-sm"  data-aos="fade-up">
+        <div className="bg-secondary bg-opacity-90 p-10 space-y-6 text-center md:w-2/5 w-3/4 shadow-[5px_0_5px_0_rgba(0,0,0,0.25)] absolute md:top-1/3 md:left-1/2 top-40 left-40 md:text-base text-sm"  data-aos="fade-up">
           <h3>
             Hoi, we zijn Carla en Rody en samen zijn we{" "}
             <span className="text-lg span">LekkerThuis!</span>

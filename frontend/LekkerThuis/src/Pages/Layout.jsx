@@ -12,12 +12,12 @@ const Layout = () => {
         <ul className="flex flex-row justify-around w-[30%] items-center">
           <li>
             <Link to="/home" className="flex flex-row items-center">
-              <span>Home</span><FaHome className="w-10" />
+              <span className="hidden sm:block">Home</span><FaHome className="w-10" />
             </Link>
           </li>
           <li>
             <Link to="/about" className="flex flex-row items-center">
-              <span>About us</span><FaUser className="w-10" />
+              <span className="hidden sm:block">About us</span><FaUser className="w-10" />
             </Link>
           </li>
           <li>
