@@ -1,7 +1,12 @@
 import "../App.css";
+import SocialMedia from "./SocialMedia";
 
 const Footer = () => {
   return (
+    <>
+    <div>
+      <SocialMedia />
+    </div>
     <div className="footer">
       <div className="footer-bg"></div>
       <div className="footer-content text-sm font-bold tracking-wider px-10 py-5">
@@ -21,6 +26,7 @@ const Footer = () => {
         </ul>
       </div>
     </div>
+    </>
   );
 };
 

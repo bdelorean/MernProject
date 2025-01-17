@@ -1,4 +1,5 @@
 import ContentAbout from "../components/ContentAbout";
+import SocialMedia from "../components/SocialMedia";
 import Titles from "../components/Titles";
 
 const AboutPage = () => {
@@ -6,6 +7,8 @@ const AboutPage = () => {
     <Titles 
     title="About Us" />
     <ContentAbout />
+
+   
     
     </div> );
 }
